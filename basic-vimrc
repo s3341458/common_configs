@@ -1,0 +1,106 @@
+" smile
+echo ">^.^<"
+
+" space to select the cursor in word
+noremap <space> viw
+
+" leader is ctrl key
+let mapleader = ";"
+
+" pr means print
+iabbrev pr print()
+
+" obvious cursor movement will cause vim enter command mod
+inoremap jk <esc> 
+inoremap jj <esc>
+inoremap hh <esc>
+inoremap kk <esc>
+inoremap kj <esc>
+
+" disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+noremap <silent> <Up> :wincmd k<CR>
+noremap <silent> <Down> :wincmd j<CR>
+noremap <silent> <Left> :wincmd h<CR>
+noremap <silent> <Right> :wincmd l<CR>
+
+
+" can wrap word with "
+:nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+:nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+
+" short cut for edit vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" active vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" - will move line to line blow
+nnoremap - ddp
+
+" = will move line to line up
+nnoremap = ddkP
+
+" wrap select text wih " or '
+vnoremap <leader>" c""<esc>bp 
+vnoremap <leader>' c''<esc>bp 
+
+" auto comment out the javascript and python  
+autocmd FileType javascript nnoremap <buffer> <c-c> I//<esc>
+autocmd FileType python nnoremap <buffer> <c-c> I#<esc>
+
+" H move the first of the line, L move to the last of the line
+nnoremap H ^
+nnoremap L $
+
+" can delete entire line on edit
+inoremap <c-d> <esc>ddi
+
+" can delete previous word on edit
+inoremap <c-e> <esc>eldbi
+
+" can delete next  word on edit
+inoremap <c-b> <esc>bhdei
+
+" enable syntax highlighting
+syntax enable
+
+" show line numbers
+set number
+
+" set tabs to have 4 spaces
+set ts=4
+
+" indent when moving to the next line while writing code
+set autoindent
+
+" expand tabs into spaces
+set expandtab
+
+" when using the >> or << commands, shift lines by 4 spaces
+set shiftwidth=4
+
+" show a visual line under the cursor's current line
+set cursorline
+
+" show the matching part of the pair for [] {} and ()
+set showmatch
+
+" enable all Python syntax highlighting features
+let python_highlight_all = 1
+
+" able to copy things and paste things outside vim"
+
+set autowriteall
+
+" always split on right
+set splitright
+
+" set my email address 
+iabbrev @@ chengyu0316@gmail.com
+
+
