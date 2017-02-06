@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/chengyu/CRM-API/venv/lib'
+let g:netrw_dirhist_2='/home/chengyu/CRM-API/backend/views'
+let g:netrw_dirhist_3='/home/chengyu/CRM-API/documentation'
+let g:netrw_dirhist_4='/home/chengyu/CRM-API'
