@@ -12,6 +12,16 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" install nerd-tree
+Plugin 'scrooloose/nerdtree'
+" install ctrlp
+Plugin 'kien/ctrlp.vim'
+" install surround
+Plugin 'tpope/vim-surround'
+" install ag grepper
+Plugin 'rking/ag.vim' 
+" install grep replacer
+Plugin 'skwp/greplace.vim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -132,6 +142,10 @@ onoremap il( :<c-u>normal! F)vi(<cr>
 vnoremap <leader>" c""<esc>bp
 vnoremap <leader>' c''<esc>bp
 
+" H move the first of the line, L move to the last of the line
+vnoremap H ^
+vnoremap L $
+
 " type // to search selected text of current file
 vnoremap // y/<C-R>"<CR>
 
@@ -140,6 +154,11 @@ vnoremap <C-c> "+y
 
 " grep selected word
 vnoremap <leader>g :execute "grep! -R " . shellescape(expand('<,'>)) . " ."<cr>:copen<cr>
+" }}}
+
+" command mode remaps of Cheng s3341458 ---------------------- {{{
+" shortcut grep search
+
 " }}}
 
 " auto comment out the javascript and python
@@ -221,13 +240,16 @@ set splitright
 set noignorecase
 
 " open quick fix window in a new tab
-set switchbuf+=newtab, newtab
+  set switchbuf+=newtab
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 " pathogen plugin support
+filetype off
+
 execute pathogen#infect()
+execute pathogen#helptags()
 filetype plugin indent on
 
 " }}}
@@ -251,3 +273,38 @@ elseif "foo" == "foo"
 endif
 " }}}
 
+" pymode plugin customization ---------------------- {{{
+    " I always using python 3 so pymode checker should using python 3
+    "let g:pymode_python = 'python3'
+    " do not like too serious syntax checker
+    "let g:pymode_lint_checkers = ['']
+    "set runtimepath-=~/.vim/bundle/python-mode
+" }}}
+
+" nerd tree plugin customization ---------------------- {{{
+    " Ctrl + n toggle nerdTree
+    map <C-n> :NERDTreeToggle<CR>
+" }}}
+
+" ag plugin customization ---------------------- {{{
+nnoremap <leader>a :set operatorfunc=<SID>AgOperator<cr>g@
+vnoremap <leader>a :<c-u>call <SID>AgOperator(visualmode())<cr>
+
+function! s:AgOperator(type)
+    let saved_unnamed_register = @@
+
+    if a:type ==# 'v'
+            normal! `<v`>y
+    elseif a:type ==# 'char'
+            normal! `[v`]y
+    else
+            return
+    endif
+
+    execute "Ag " . shellescape(@@) . " ."
+    copen
+
+    let @@ = saved_unnamed_register
+endfunction
+
+" }}}
