@@ -22,6 +22,9 @@ Plugin 'tpope/vim-surround'
 Plugin 'rking/ag.vim' 
 " install grep replacer
 Plugin 'skwp/greplace.vim'
+" install nerd commenter
+Plugin 'scrooloose/nerdcommenter'
+
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -68,17 +71,32 @@ augroup END
 " leader is
 let mapleader = ";"
 
+let g:enable_jump_normal = 1
+
 " pr means print
 iabbrev pr print()
 
 " edit mod remaps of Cheng s3341458 ---------------------- {{{
 " obvious cursor movement will cause vim enter command mod
-inoremap jk <esc> 
-inoremap jj <esc>
-inoremap hh <esc>
-inoremap lll <esc>
-inoremap kk <esc>
-inoremap kj <esc>
+function! TurnOnJumpNormalShortcuts()
+    inoremap jk <esc>
+    inoremap jj <esc>
+    inoremap hh <esc>
+    inoremap lll <esc>
+    inoremap kk <esc>
+    inoremap kj <esc>
+endfunction
+
+function! TurnOffJumpNormalShortcuts()
+    inoremap jk jk
+    inoremap jj jj
+    inoremap hh hh
+    inoremap lll lll
+    inoremap kk kk
+    inoremap kj kj
+endfunction
+
+call TurnOnJumpNormalShortcuts()
 
 " can delete entire line on edit
 inoremap <c-d> <esc>ddi
@@ -88,16 +106,31 @@ inoremap <c-e> <esc>eldbi
 
 " can delete next word on edit
 inoremap <c-b> <esc>bhdei
+
 " }}}
 
 " normal mod remaps of Cheng s3341458 ---------------------- {{{
 " disable arrow keys
+nnoremap <leader>tm :call ToggleModeJump()<cr>
+
+function! ToggleModeJump()
+    if g:enable_jump_normal
+        call TurnOffJumpNormalShortcuts()
+        echo "disable mormal jump"
+        let g:enable_jump_normal = 0
+    else
+        call TurnOnJumpNormalShortcuts()
+        echo "enable mormal jump"
+        let g:enable_jump_normal = 1
+    endif
+endfunction
+
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 
-" disable arrow keys navigate to different window
+" navigate to different window
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -156,7 +189,7 @@ vnoremap <C-c> "+y
 vnoremap <leader>g :execute "grep! -R " . shellescape(expand('<,'>)) . " ."<cr>:copen<cr>
 " }}}
 
-" command mode remaps of Cheng s3341458 ---------------------- {{{
+" command mode remaps of Cheng s3341459 ---------------------- {{{
 " shortcut grep search
 
 " }}}
@@ -301,7 +334,7 @@ function! s:AgOperator(type)
             return
     endif
 
-    execute "Ag " . shellescape(@@) . " ."
+    execute "Ag -Q " . shellescape(@@) . " ."
     copen
 
     let @@ = saved_unnamed_register

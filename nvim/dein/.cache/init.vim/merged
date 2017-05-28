@@ -1,0 +1,2 @@
+100
+['/home/chengyu/.config/nvim/dein//repos/github.com/Shougo/dein.vim', 'Shougo/deoplete.nvim', 'Shougo/neosnippet-snippets', 'Shougo/neosnippet.vim', 'carlitux/deoplete-ternjs', 'kien/ctrlp.vim', 'rking/ag.vim', 'scrooloose/nerdcommenter', 'scrooloose/nerdtree', 'skwp/greplace.vim', 'tpope/vim-surround', 'zchee/deoplete-jedi']
